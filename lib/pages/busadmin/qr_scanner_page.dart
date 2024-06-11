@@ -102,7 +102,7 @@ class _QRScannerState extends State<QRScanner> {
   }
 
   Future<void> _playBeepSound() async {
-    await _audioPlayer.setAsset('images/scanner sound.mp3');
+    await _audioPlayer.setAsset('images/scannerSoundd.mp3');
     await _audioPlayer.play();
   }
 
