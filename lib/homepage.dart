@@ -27,7 +27,10 @@ class _UserHomeState extends State<UserHome> {
   Future<void> _fetchUsername() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       if (userDoc.exists) {
         setState(() {
           username = userDoc['username'];
@@ -49,7 +52,7 @@ class _UserHomeState extends State<UserHome> {
                 borderRadius: BorderRadius.circular(15),
                 child: Image.asset(
                   'images/Mask.jpg',
-                  fit: BoxFit.contain,
+                  fit: BoxFit.cover,
                   width: double.infinity,
                   height: 200, // Increase the height to make the image larger
                 ),
@@ -62,7 +65,7 @@ class _UserHomeState extends State<UserHome> {
                 style: const TextStyle(
                   fontSize: 24,
                   fontFamily: "Outfit",
-                  color: Colors.black,
+                  color: Color(0xFF59597C),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -72,18 +75,20 @@ class _UserHomeState extends State<UserHome> {
                 children: [
                   DropdownButton<String>(
                     value: dropdownValueFrom,
-                    items: itemsList.map((item) => DropdownMenuItem(
-                      value: item,
-                      child: Text(
-                        item,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: "Outfit",
-                          fontWeight: FontWeight.w400,
-                          color: Color.fromARGB(255, 92, 92, 124),
-                        ),
-                      ),
-                    )).toList(),
+                    items: itemsList
+                        .map((item) => DropdownMenuItem(
+                              value: item,
+                              child: Text(
+                                item,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "Outfit",
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromARGB(255, 92, 92, 124),
+                                ),
+                              ),
+                            ))
+                        .toList(),
                     onChanged: (item) {
                       setState(() {
                         dropdownValueFrom = item!;
@@ -117,7 +122,9 @@ class _UserHomeState extends State<UserHome> {
         ),
       ),
       floatingActionButton: buildFloatingActionButton(context),
-      bottomNavigationBar: BottomNavigationBarWidget(tickets: [],),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        tickets: [],
+      ),
     );
   }
 
@@ -137,18 +144,16 @@ class _UserHomeState extends State<UserHome> {
         final cardMenu = snapshot.data!.docs;
 
         // Filter and sort the cardMenu based on status
-        final filteredAndSortedCards = cardMenu
-            .where((document) {
-              var data = document.data() as Map<String, dynamic>;
-              var complex = data['Complex'] ?? '';
-              if (dropdownValueFrom == 'JUST') {
-                return complex == 'JUST';
-              } else if (dropdownValueFrom == 'Amman') {
-                return complex == 'Amman';
-              }
-              return false;
-            })
-            .toList()
+        final filteredAndSortedCards = cardMenu.where((document) {
+          var data = document.data() as Map<String, dynamic>;
+          var complex = data['Complex'] ?? '';
+          if (dropdownValueFrom == 'JUST') {
+            return complex == 'JUST';
+          } else if (dropdownValueFrom == 'Amman') {
+            return complex == 'Amman';
+          }
+          return false;
+        }).toList()
           ..sort((a, b) {
             var aData = a.data() as Map<String, dynamic>;
             var bData = b.data() as Map<String, dynamic>;
@@ -164,20 +169,18 @@ class _UserHomeState extends State<UserHome> {
           });
 
         return Column(
-          children: filteredAndSortedCards
-              .map((document) {
-                var data = document.data() as Map<String, dynamic>;
-                var card = CCard(
-                  Complex: data['Complex'] ?? '', // Ensure a default value
-                  Status: data['Status'] ?? '',   // Ensure a default value
-                  BusNumber: (data['id'] ?? '').toString(), // Ensure a string value
-                );
-                return UserHpCards(
-                  card: card,
-                  documentId: document.id,
-                );
-              })
-              .toList(),
+          children: filteredAndSortedCards.map((document) {
+            var data = document.data() as Map<String, dynamic>;
+            var card = CCard(
+              Complex: data['Complex'] ?? '', // Ensure a default value
+              Status: data['Status'] ?? '', // Ensure a default value
+              BusNumber: (data['id'] ?? '').toString(), // Ensure a string value
+            );
+            return UserHpCards(
+              card: card,
+              documentId: document.id,
+            );
+          }).toList(),
         );
       },
     );
@@ -186,7 +189,8 @@ class _UserHomeState extends State<UserHome> {
   // Function to build the floating action button
   Widget buildFloatingActionButton(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center, // Aligns the FAB to the center of the row
+      mainAxisAlignment:
+          MainAxisAlignment.center, // Aligns the FAB to the center of the row
       children: [
         SizedBox(width: 30), // Adds a slight space to the left of the FAB
         Container(
@@ -196,7 +200,8 @@ class _UserHomeState extends State<UserHome> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.orange.withOpacity(0.2), // Increased shadow opacity
+                color:
+                    Colors.orange.withOpacity(0.2), // Increased shadow opacity
                 spreadRadius: 2,
                 blurRadius: 10,
                 offset: Offset(0, 5), // Changed position of shadow
@@ -212,14 +217,13 @@ class _UserHomeState extends State<UserHome> {
           child: FloatingActionButton(
             onPressed: () {
               Navigator.of(context).pushNamed('Purchase');
-              
             },
             backgroundColor: Colors.transparent,
             elevation: 0,
             child: Text(
               'Buy Now',
               style: TextStyle(
-                color: Colors.white, 
+                color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),

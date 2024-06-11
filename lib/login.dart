@@ -20,7 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  CollectionReference managers = FirebaseFirestore.instance.collection('managers');
+  CollectionReference managers =
+      FirebaseFirestore.instance.collection('managers');
   CollectionReference admins = FirebaseFirestore.instance.collection('admins');
 
   String? _emailErrorMessage;
@@ -44,13 +45,16 @@ class _LoginPageState extends State<LoginPage> {
       if (isLoggedIn) {
         if (userType == 'admin') {
           // Admin is signed in, navigate to 'homeadmin'
-          Navigator.of(context).pushNamedAndRemoveUntil('homeadmin', (route) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('homeadmin', (route) => false);
         } else if (userType == 'manager') {
           // Manager is signed in, navigate to 'homemanager'
-          Navigator.of(context).pushNamedAndRemoveUntil('homemanager', (route) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('homemanager', (route) => false);
         } else {
           // Normal user is signed in, navigate to 'homepage'
-          Navigator.of(context).pushNamedAndRemoveUntil('homepage', (route) => false);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil('homepage', (route) => false);
         }
       }
     }
@@ -69,14 +73,16 @@ class _LoginPageState extends State<LoginPage> {
         return; // The user canceled the sign-in
       }
 
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
       User? user = userCredential.user;
 
       if (user != null) {
@@ -88,7 +94,8 @@ class _LoginPageState extends State<LoginPage> {
       }
 
       // Navigate to the next screen
-      Navigator.of(context).pushNamedAndRemoveUntil('homepage', (route) => false);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('homepage', (route) => false);
     } catch (e) {
       setState(() {
         _emailErrorMessage = 'Google sign-in failed. Please try again.';
@@ -99,12 +106,14 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<void> signInEmployee(String id, String password) async {
     try {
-      QuerySnapshot managerSnapshot = await FirebaseFirestore.instance.collection('managers')
+      QuerySnapshot managerSnapshot = await FirebaseFirestore.instance
+          .collection('managers')
           .where('id', isEqualTo: id)
           .where('password', isEqualTo: password)
           .get();
 
-      QuerySnapshot adminSnapshot = await FirebaseFirestore.instance.collection('admins')
+      QuerySnapshot adminSnapshot = await FirebaseFirestore.instance
+          .collection('admins')
           .where('id', isEqualTo: id)
           .where('password', isEqualTo: password)
           .get();
@@ -112,7 +121,8 @@ class _LoginPageState extends State<LoginPage> {
       if (managerSnapshot.docs.isNotEmpty) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userID', id);
-        await prefs.setString('userName', managerSnapshot.docs.first['id']); // Save the actual name
+        await prefs.setString('userName',
+            managerSnapshot.docs.first['id']); // Save the actual name
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomePage()),
@@ -120,7 +130,8 @@ class _LoginPageState extends State<LoginPage> {
       } else if (adminSnapshot.docs.isNotEmpty) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('userID', id);
-        await prefs.setString('userName', adminSnapshot.docs.first['id']); // Save the actual name
+        await prefs.setString(
+            'userName', adminSnapshot.docs.first['id']); // Save the actual name
 
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => ScanPage()),
@@ -209,7 +220,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 40),
               Text(
-                isEmployee ? '  ID' : '  Email address',
+                isEmployee ? '  Employee ID' : '  Email address',
                 style: TextStyle(
                   color: Color(0xFF59597C),
                   fontSize: 14,
@@ -299,7 +310,8 @@ class _LoginPageState extends State<LoginPage> {
                   if (_formKey.currentState!.validate()) {
                     try {
                       if (isEmployee) {
-                        await signInEmployee(emailController.text, passwordController.text);
+                        await signInEmployee(
+                            emailController.text, passwordController.text);
                       } else {
                         await FirebaseAuth.instance.signInWithEmailAndPassword(
                           email: emailController.text,
@@ -311,7 +323,8 @@ class _LoginPageState extends State<LoginPage> {
                       setState(() {
                         switch (e.code) {
                           case 'user-not-found':
-                            _emailErrorMessage = 'No user found for that email.';
+                            _emailErrorMessage =
+                                'No user found for that email.';
                             break;
                           case 'wrong-password':
                             _passwordErrorMessage = 'Wrong password provided.';
@@ -320,7 +333,8 @@ class _LoginPageState extends State<LoginPage> {
                             _emailErrorMessage = 'Invalid email format.';
                             break;
                           default:
-                            _emailErrorMessage = 'Login failed. Please check your credentials.';
+                            _emailErrorMessage =
+                                'Login failed. Please check your credentials.';
                             break;
                         }
                       });
@@ -389,7 +403,8 @@ class _LoginPageState extends State<LoginPage> {
                       onPressed: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const SignUpPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const SignUpPage()),
                         );
                       },
                       child: const Text('Sign up'),

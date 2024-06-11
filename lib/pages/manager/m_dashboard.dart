@@ -12,6 +12,7 @@ class Dashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Data Analytics Dashboard',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -27,18 +28,14 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(title: "Dashboard "),
       body: Container(
-        child: Center(
-          
-        ),
+        child: Center(),
       ),
-           bottomNavigationBar: BottomNavigationBarWidgetM(),
-
+      bottomNavigationBar: BottomNavigationBarWidgetM(),
     );
   }
 }

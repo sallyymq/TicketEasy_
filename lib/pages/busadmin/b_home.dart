@@ -32,27 +32,51 @@ class ScanPage extends StatelessWidget {
                 color: Colors.transparent,
                 borderRadius: BorderRadius.circular(20),
               ),
-              child: ElevatedButton(
-                onPressed: () {
+              child: GestureDetector(
+                onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => QRScannerPage(),
                     ),
                   );
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFF47814), // Orange color
-                  padding: EdgeInsets.symmetric(vertical: 15), // Vertical padding
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20), // Rounded corners
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: RadialGradient(
+                      colors: [
+                        Color(0xFFFE9B4B),
+                        Color(0xFFF47814),
+                      ],
+                      center: Alignment.bottomCenter,
+                      radius: 2.78,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color:
+                            Color.fromARGB(255, 218, 146, 38).withOpacity(0.3),
+                        spreadRadius: 2,
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
                   ),
-                ),
-                child: const Text(
-                  'Scan QR Code',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Scan QR Code',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      // Icon(Icons.qr_code_scanner, color: Colors.white),
+                    ],
                   ),
                 ),
               ),

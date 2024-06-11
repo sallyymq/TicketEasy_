@@ -21,8 +21,10 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> _fetchUserData() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      DocumentSnapshot userDoc =
-          await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
       if (userDoc.exists) {
         setState(() {
           displayName = userDoc['username'];
@@ -71,6 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
                 fontFamily: "Outfit",
+                color: Color(0xFF59597C),
               ),
             ),
             SizedBox(height: 7),
@@ -80,6 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
                 fontFamily: "Outfit",
+                color: Color(0xFF59597C),
               ),
             ),
             SizedBox(height: 27),
@@ -124,15 +128,15 @@ class _ProfilePageState extends State<ProfilePage> {
               onPressed: () async {
                 FirebaseAuth auth = FirebaseAuth.instance;
                 await auth.signOut();
-                Navigator.of(context).pushNamedAndRemoveUntil("login", (route) => false);
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil("login", (route) => false);
               },
               elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: 12, horizontal: 20),
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: RadialGradient(
@@ -167,7 +171,9 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBarWidget(tickets: [],),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        tickets: [],
+      ),
     );
   }
 }
