@@ -91,6 +91,17 @@ class _LoginPageState extends State<LoginPage> {
           'email': user.email,
           'username': user.displayName,
         });
+
+        // Check if the user has verified their email
+        if (!user.emailVerified) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please verify your email first.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          return;
+        }
       }
 
       // Navigate to the next screen
@@ -146,6 +157,73 @@ class _LoginPageState extends State<LoginPage> {
         _emailErrorMessage = 'Login failed. Please check your credentials.';
       });
       print('Employee sign-in error: $e');
+    }
+  }
+
+  Future<void> _signInWithEmailAndPassword() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // Check if the user has verified their email
+        if (!userCredential.user!.emailVerified) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Please verify your email first.'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          return;
+        }
+
+        Navigator.of(context).pushReplacementNamed('homepage');
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          switch (e.code) {
+            case 'user-not-found':
+              _emailErrorMessage = 'No user found for that email.';
+              break;
+            case 'wrong-password':
+              _passwordErrorMessage = 'Wrong password provided.';
+              break;
+            case 'invalid-email':
+              _emailErrorMessage = 'Invalid email format.';
+              break;
+            default:
+              _emailErrorMessage =
+                  'Login failed. Please check your credentials.';
+              break;
+          }
+        });
+      } catch (e) {
+        setState(() {
+          _emailErrorMessage = 'Login failed. Please try again.';
+        });
+        print('General sign-in error: $e');
+      }
+    }
+  }
+
+  Future<void> _resetPassword() async {
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Password reset email sent.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        _emailErrorMessage =
+            'Failed to send password reset email. Please try again.';
+      });
+      print('Password reset error: $e');
     }
   }
 
@@ -293,7 +371,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-              SizedBox(height: 40),
+              SizedBox(height: 50),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
@@ -307,43 +385,11 @@ class _LoginPageState extends State<LoginPage> {
                     _emailErrorMessage = null;
                     _passwordErrorMessage = null;
                   });
-                  if (_formKey.currentState!.validate()) {
-                    try {
-                      if (isEmployee) {
-                        await signInEmployee(
-                            emailController.text, passwordController.text);
-                      } else {
-                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                          email: emailController.text,
-                          password: passwordController.text,
-                        );
-                        Navigator.of(context).pushReplacementNamed('homepage');
-                      }
-                    } on FirebaseAuthException catch (e) {
-                      setState(() {
-                        switch (e.code) {
-                          case 'user-not-found':
-                            _emailErrorMessage =
-                                'No user found for that email.';
-                            break;
-                          case 'wrong-password':
-                            _passwordErrorMessage = 'Wrong password provided.';
-                            break;
-                          case 'invalid-email':
-                            _emailErrorMessage = 'Invalid email format.';
-                            break;
-                          default:
-                            _emailErrorMessage =
-                                'Login failed. Please check your credentials.';
-                            break;
-                        }
-                      });
-                    } catch (e) {
-                      setState(() {
-                        _emailErrorMessage = 'Login failed. Please try again.';
-                      });
-                      print('General sign-in error: $e');
-                    }
+                  if (isEmployee) {
+                    await signInEmployee(
+                        emailController.text, passwordController.text);
+                  } else {
+                    await _signInWithEmailAndPassword();
                   }
                 },
                 child: const Text(
@@ -351,6 +397,23 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
+              if (!isEmployee) ...[
+                SizedBox(height: 10),
+                TextButton(
+                  onPressed: () {
+                    _resetPassword();
+                  },
+                  child: Text(
+                    '                                                Forgot Password?',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 92, 92, 124),
+                      fontSize: 14,
+                      fontWeight: FontWeight.normal,
+                      fontFamily: "Inter",
+                    ),
+                  ),
+                ),
+              ],
               SizedBox(height: 40),
               if (!isEmployee) ...[
                 const Row(
@@ -394,7 +457,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: 17),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

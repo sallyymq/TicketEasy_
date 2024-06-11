@@ -15,7 +15,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   bool isPasswordVisible = false;
 
@@ -182,19 +183,37 @@ class _SignUpPageState extends State<SignUpPage> {
                   }
 
                   try {
-                    final UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                    final UserCredential userCredential = await FirebaseAuth
+                        .instance
+                        .createUserWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
 
+                    // Send email verification
+                    await userCredential.user?.sendEmailVerification();
+
                     // Save user data to Firestore
-                    await FirebaseFirestore.instance.collection('users').doc(userCredential.user?.uid).set({
+                    await FirebaseFirestore.instance
+                        .collection('users')
+                        .doc(userCredential.user?.uid)
+                        .set({
                       'username': username,
                       'email': email,
                     });
 
-                    // If signup is successful, navigate to Purchase screen
-                    Navigator.of(context).pushReplacementNamed("purchase");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            'Verification email sent. Please check your email.'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+
+                    // Navigate to login page
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                    );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'weak-password') {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -206,7 +225,8 @@ class _SignUpPageState extends State<SignUpPage> {
                     } else if (e.code == 'email-already-in-use') {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
-                          content: Text('The account already exists for that email.'),
+                          content: Text(
+                              'The account already exists for that email.'),
                           duration: Duration(seconds: 2),
                         ),
                       );
@@ -221,7 +241,8 @@ class _SignUpPageState extends State<SignUpPage> {
                   } catch (e) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
-                        content: Text('An error occurred. Please try again later.'),
+                        content:
+                            Text('An error occurred. Please try again later.'),
                         duration: Duration(seconds: 2),
                       ),
                     );
