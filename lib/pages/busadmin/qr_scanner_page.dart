@@ -1,6 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:qr_code_scanner/qr_code_scanner.dart';
+// import 'package:just_audio/just_audio.dart'; // Import just_audio package
 
 // class QRScannerPage extends StatelessWidget {
 //   @override
@@ -23,10 +24,13 @@
 //   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 //   Barcode? result;
 //   QRViewController? controller;
+//   final AudioPlayer _audioPlayer =
+//       AudioPlayer(); // Create an AudioPlayer instance
 
 //   @override
 //   void dispose() {
 //     controller?.dispose();
+//     _audioPlayer.dispose(); // Dispose the audio player
 //     super.dispose();
 //   }
 
@@ -85,8 +89,9 @@
 
 //       if (result != null) {
 //         String scannedCode = result!.code!;
+//         await _playBeepSound(); // Play the beep sound
 //         await _handleScannedTicket(scannedCode);
-//         await Future.delayed(Duration(seconds: 1));
+//         await Future.delayed(Duration(milliseconds: 500));
 //         controller
 //             .resumeCamera(); // Resume the camera after processing is complete
 
@@ -94,6 +99,11 @@
 //         ScaffoldMessenger.of(context).removeCurrentSnackBar();
 //       }
 //     });
+//   }
+
+//   Future<void> _playBeepSound() async {
+//     await _audioPlayer.setAsset('images/scannerSound.mp3');
+//     await _audioPlayer.play();
 //   }
 
 //   Future<void> _handleScannedTicket(String qrCodeData) async {
@@ -237,7 +247,7 @@ class _QRScannerState extends State<QRScanner> {
         String scannedCode = result!.code!;
         await _playBeepSound(); // Play the beep sound
         await _handleScannedTicket(scannedCode);
-        await Future.delayed(Duration(milliseconds: 500));
+        await Future.delayed(Duration(seconds: 2));
         controller
             .resumeCamera(); // Resume the camera after processing is complete
 
@@ -248,8 +258,8 @@ class _QRScannerState extends State<QRScanner> {
   }
 
   Future<void> _playBeepSound() async {
-    await _audioPlayer.setAsset('images/scanner sound.mp3');
-    await _audioPlayer.play();
+    await _audioPlayer.setAsset('images/scannerSound.mp3'); // Set the asset
+    await _audioPlayer.play(); // Play the beep sound
   }
 
   Future<void> _handleScannedTicket(String qrCodeData) async {
