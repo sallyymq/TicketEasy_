@@ -114,6 +114,8 @@ flutter:
     - images/Vector.png
     - images/Outlined_qr.png
     - images/scanner sound.mp3
+    - images/scannerSoundd.mp3
+
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
