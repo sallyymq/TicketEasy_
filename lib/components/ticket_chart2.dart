@@ -40,7 +40,7 @@ class WeeklyTicketsChartWidget extends StatelessWidget {
             return Tickets.fromMap(doc.data() as Map<String, dynamic>);
           }).toList();
 
-          Map<int, int> ticketsPerDay = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
+          Map<int, int> ticketsPerDay = {7: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0};
 
           for (var ticket in tickets) {
             int dayOfWeek = ticket.getTime.toDate().weekday;
@@ -88,8 +88,8 @@ class WeeklyTicketsChartWidget extends StatelessWidget {
                 name: 'Tickets',
                 color: Colors.orange,
                 borderRadius: BorderRadius.all(Radius.circular(10)),
-                width: 0.6,  
-                spacing: 0.0,  
+                width: 0.6,
+                spacing: 0.0,
                 dataLabelSettings: DataLabelSettings(isVisible: true),
               ),
             ],
@@ -101,19 +101,20 @@ class WeeklyTicketsChartWidget extends StatelessWidget {
 
   String _dayOfWeekToString(int day) {
     switch (day) {
+      case 7:
+        return "Su";
       case 1:
-        return "Sa";
-      case 2:
         return "M";
-      case 3:
+      case 2:
         return "Tu";
-      case 4:
+      case 3:
         return "W";
-      case 5:
+      case 4:
         return "Th";
-      case 6:
+      case 5:
         return "F";
-      
+      case 6:
+        return "Sa";
       default:
         return "";
     }
