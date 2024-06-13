@@ -10,94 +10,98 @@ class TicketsChartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue.withOpacity(0.10),
-            blurRadius: 20,
-            offset: Offset(10, 25),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(20),
-      child: StreamBuilder<QuerySnapshot>(
-        stream: ticketsCollection
-            .where('Date', isEqualTo: DateFormat('yyyy-MM-dd').format(DateTime.now()))
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-          if (snapshot.hasError) {
-            return Center(child: Text("Error: ${snapshot.error}"));
-          }
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text("No tickets found"));
-          }
-
-          List<Tickets> tickets = snapshot.data!.docs.map((doc) {
-            return Tickets.fromMap(doc.data() as Map<String, dynamic>);
-          }).toList();
-
-          Map<int, int> ticketsPerHour = {};
-          for (var ticket in tickets) {
-            int hour = ticket.getTime.toDate().hour;
-            if (hour >= 7 && hour <= 17) {
-              ticketsPerHour[hour] = (ticketsPerHour[hour] ?? 0) + 1;
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Container(
+        width: 500, 
+        height: 300,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.blue.withOpacity(0.10),
+              blurRadius: 20,
+              offset: Offset(10, 25),
+            ),
+          ],
+        ),
+        padding: EdgeInsets.all(20),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: ticketsCollection
+              .where('Date', isEqualTo: DateFormat('yyyy-MM-dd').format(DateTime.now()))
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
             }
-          }
+            if (snapshot.hasError) {
+              return Center(child: Text("Error: ${snapshot.error}"));
+            }
+            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+              return Center(child: Text("No tickets found"));
+            }
 
-          List<ChartData> chartData = ticketsPerHour.entries
-              .map((entry) => ChartData(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, entry.key), entry.value))
-              .toList();
+            List<Tickets> tickets = snapshot.data!.docs.map((doc) {
+              return Tickets.fromMap(doc.data() as Map<String, dynamic>);
+            }).toList();
 
-          return SfCartesianChart(
-            primaryXAxis: DateTimeAxis(
-              minimum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 7),
-              maximum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 17),
-              intervalType: DateTimeIntervalType.hours,
-              interval: 1, // 1 hour interval
-              dateFormat: DateFormat.j(),
-              title: AxisTitle(
-                text: "Time",
-                textStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(149, 0, 0, 0),
-                  fontSize: 12,
+            Map<int, int> ticketsPerHour = {};
+            for (var ticket in tickets) {
+              int hour = ticket.getTime.toDate().hour;
+              if (hour >= 00 && hour <= 24) {
+                ticketsPerHour[hour] = (ticketsPerHour[hour] ?? 0) + 1;
+              }
+            }
+
+            List<ChartData> chartData = ticketsPerHour.entries
+                .map((entry) => ChartData(DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, entry.key), entry.value))
+                .toList();
+
+            return SfCartesianChart(
+              primaryXAxis: DateTimeAxis(
+                minimum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 00),
+                maximum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 24),
+                intervalType: DateTimeIntervalType.hours,
+                interval: 2, 
+                dateFormat: DateFormat.j(),
+                title: AxisTitle(
+                  text: "Time",
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(149, 0, 0, 0),
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            primaryYAxis: NumericAxis(
-              minimum: 0,
-              maximum:20,
-              interval: 5,
-              title: AxisTitle(
-                text: "Number of Tickets",
-                textStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: const Color.fromARGB(149, 0, 0, 0),
-                  fontSize: 12,
+              primaryYAxis: NumericAxis(
+                minimum: 0,
+                maximum: 20,
+                interval: 5,
+                title: AxisTitle(
+                  text: "Number of Tickets",
+                  textStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: const Color.fromARGB(149, 0, 0, 0),
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
-            legend: Legend(isVisible: false),
-            tooltipBehavior: TooltipBehavior(enable: true),
-            series: <CartesianSeries>[
-              LineSeries<ChartData, DateTime>(
-                dataSource: chartData,
-                xValueMapper: (ChartData data, _) => data.time,
-                yValueMapper: (ChartData data, _) => data.tickets,
-                name: 'Tickets',
-                color: Colors.orange, 
-                dataLabelSettings: DataLabelSettings(isVisible: true),
-              ),
-            ],
-          );
-        },
+              legend: Legend(isVisible: false),
+              tooltipBehavior: TooltipBehavior(enable: true),
+              series: <CartesianSeries>[
+                LineSeries<ChartData, DateTime>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartData data, _) => data.time,
+                  yValueMapper: (ChartData data, _) => data.tickets,
+                  name: 'Tickets',
+                  color: Colors.orange, 
+                  dataLabelSettings: DataLabelSettings(isVisible: true),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
