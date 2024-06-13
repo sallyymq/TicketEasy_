@@ -56,6 +56,8 @@ class _InfoPageState extends State<InfoPage> {
             Complex: data['Complex'],
             Status: data['Status'],
             BusNumber: (data['id'] ?? '').toString(),
+            Bus_Num: data['Bus_Num'] ?? '', 
+              Seats_Num: data['Seats_Num'] ?? 0, 
           );
 
           // Update controllers with new data
