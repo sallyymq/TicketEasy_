@@ -13,7 +13,7 @@ class TicketsChartWidget extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
-        width: 500, 
+        width: 700, 
         height: 300,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -63,7 +63,7 @@ class TicketsChartWidget extends StatelessWidget {
                 minimum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 00),
                 maximum: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, 24),
                 intervalType: DateTimeIntervalType.hours,
-                interval: 2, 
+                interval: 1, 
                 dateFormat: DateFormat.j(),
                 title: AxisTitle(
                   text: "Time",
