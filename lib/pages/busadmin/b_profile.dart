@@ -81,8 +81,8 @@ class _BProfilePageState extends State<BProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Your Name",
-                            style: TextStyle(
+                            "\nYour Name",
+                            style:TextStyle(
                               color: Color(0xFF59597C),
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -100,39 +100,12 @@ class _BProfilePageState extends State<BProfilePage> {
                       onTap: () {},
                     ),
                     SizedBox(height: 24),
-                    ListTile(
-                      leading: Icon(
-                        Icons.verified_user,
-                        color: orangee,
-                        size: 24,
-                      ),
-                      title: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "ID number",
-                            style: TextStyle(
-                              color: Color(0xFF59597C),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4),
-                          Text(
-                            "7896542", // Replace with the actual ID if needed
-                            style: TextStyle(
-                                color: Color(0xFF222222).withOpacity(0.8),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                      onTap: () {},
-                    ),
-                    SizedBox(height: 15),
+                    
+                    
                   ],
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 40),
               MaterialButton(
                 onPressed: () async {
                   try {
@@ -215,3 +188,4 @@ class LinePainter extends CustomPainter {
     return false;
   }
 }
+
