@@ -175,6 +175,8 @@ class _UserHomeState extends State<UserHome> {
               Complex: data['Complex'] ?? '', // Ensure a default value
               Status: data['Status'] ?? '', // Ensure a default value
               BusNumber: (data['id'] ?? '').toString(), // Ensure a string value
+              Bus_Num: data['Bus_Num'] ?? '', // Ensure a default value
+              Seats_Num: data['Seats_Num'] ?? 0, 
             );
             return UserHpCards(
               card: card,
