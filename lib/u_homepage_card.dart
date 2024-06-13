@@ -1,82 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:ticketeasy/models/cards.dart';
+import 'package:ticketeasy/theme/colors.dart';
 
-class UserHpCards extends StatelessWidget {
+class infocards extends StatelessWidget {
   final CCard card;
-  final String documentId;
-  final void Function()? onTap;
-
-  const UserHpCards({
-    Key? key,
-    required this.card,
-    required this.documentId,
-    this.onTap,
-  }) : super(key: key);
-
+  const infocards({super.key, required this.card});
   @override
   Widget build(BuildContext context) {
-    Color statusColor = card.Status == 'Open' ? Colors.green : Colors.red;
-
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue
-                .withOpacity(0.18), // Corrected the reference to blue color
-            blurRadius: 15,
-            offset: Offset(0, 10),
+            color: bluee.withOpacity(0.12),
+            blurRadius: 50,
+            offset: Offset(0, 15),
           ),
         ],
       ),
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(22),
+      margin: const EdgeInsets.only(left:8),
+      padding: const EdgeInsets.all(15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            "   Bus #" + card.BusNumber,
+            style: TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18),
+          ),
+          const SizedBox(height: 15),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              const SizedBox(width: 15),
               Text(
-                " Bus Number #${card.BusNumber}",
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color.fromARGB(255, 92, 92, 124),
-                ),
-              ),
-              Text(
-                "1.15 JOD",
+                "Bus Number ",
                 style: TextStyle(
-                  color: Color.fromARGB(255, 92, 92, 124),
-                ),
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF59597C),
+                    fontSize: 14),
+              ),
+              const SizedBox(width: 20),
+              Text(
+                "Seats Number",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF59597C),
+                    fontSize: 14),
               ),
             ],
           ),
-          const SizedBox(height: 18),
+          const SizedBox(height: 8),
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 247, 235),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  "Bus seats number: ${card.Complex}",
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
-                    color: Colors.orange,
-                  ),
-                ),
-              ),
-              SizedBox(width: 80), // Added space between the two Text widgets
+              const SizedBox(width: 30),
               Text(
-                card.Status,
-                style: TextStyle(
-                  color: statusColor, // Use statusColor here
-                ),
+                card.Bus_Num,
+                style: TextStyle(color: Color(0xFF59597C), fontSize: 14),
+              ),
+              const SizedBox(width: 60),
+              Text(
+  card.Seats_Num.toString(),
+                style: TextStyle(color: Color(0xFF59597C), fontSize: 14),
               ),
             ],
           ),
