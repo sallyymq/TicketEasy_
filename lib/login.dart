@@ -404,7 +404,7 @@ class _LoginPageState extends State<LoginPage> {
                     _resetPassword();
                   },
                   child: Text(
-                    '                                                Forgot Password?',
+                    '   Forgot Password?',
                     style: TextStyle(
                       color: Color.fromARGB(255, 92, 92, 124),
                       fontSize: 14,
