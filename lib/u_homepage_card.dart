@@ -63,7 +63,7 @@ class UserHpCards extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  "Available seats: ${card.Complex}",
+                  "Bus seats number: ${card.Complex}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12,
@@ -71,7 +71,7 @@ class UserHpCards extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 70), // Added space between the two Text widgets
+              SizedBox(width: 80), // Added space between the two Text widgets
               Text(
                 card.Status,
                 style: TextStyle(
