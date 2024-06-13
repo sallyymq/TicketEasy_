@@ -34,7 +34,7 @@ class infocards extends StatelessWidget {
             children: [
               const SizedBox(width: 15),
               Text(
-                "Bus Admin ",
+                "Bus Number ",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF59597C),
@@ -55,12 +55,12 @@ class infocards extends StatelessWidget {
             children: [
               const SizedBox(width: 30),
               Text(
-                "58761",
+                card.Bus_Num,
                 style: TextStyle(color: Color(0xFF59597C), fontSize: 14),
               ),
               const SizedBox(width: 60),
               Text(
-                "45",
+  card.Seats_Num.toString(),
                 style: TextStyle(color: Color(0xFF59597C), fontSize: 14),
               ),
             ],
