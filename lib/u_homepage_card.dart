@@ -1,67 +1,82 @@
 import 'package:flutter/material.dart';
 import 'package:ticketeasy/models/cards.dart';
-import 'package:ticketeasy/theme/colors.dart';
 
-class infocards extends StatelessWidget {
+class UserHpCards extends StatelessWidget {
   final CCard card;
-  const infocards({super.key, required this.card});
+  final String documentId;
+  final void Function()? onTap;
+
+  const UserHpCards({
+    Key? key,
+    required this.card,
+    required this.documentId,
+    this.onTap,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    Color statusColor = card.Status == 'Open' ? Colors.green : Colors.red;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: bluee.withOpacity(0.12),
-            blurRadius: 50,
-            offset: Offset(0, 15),
+            color: Colors.blue
+                .withOpacity(0.18), // Corrected the reference to blue color
+            blurRadius: 15,
+            offset: Offset(0, 10),
           ),
         ],
       ),
-      margin: const EdgeInsets.only(left:8),
-      padding: const EdgeInsets.all(15),
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "   Bus #" + card.BusNumber,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18),
-          ),
-          const SizedBox(height: 15),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(width: 15),
               Text(
-                "Bus Number ",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF59597C),
-                    fontSize: 14),
+                " Bus Number #${card.BusNumber}",
+                style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(255, 92, 92, 124),
+                ),
               ),
-              const SizedBox(width: 20),
               Text(
-                "Seats Number",
+                "1.15 JOD",
                 style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF59597C),
-                    fontSize: 14),
+                  color: Color.fromARGB(255, 92, 92, 124),
+                ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 18),
           Row(
             children: [
-              const SizedBox(width: 30),
-              Text(
-                card.Bus_Num,
-                style: TextStyle(color: Color(0xFF59597C), fontSize: 14),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 247, 235),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  "Bus seats number: ${card.Seats_Num}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.orange,
+                  ),
+                ),
               ),
-              const SizedBox(width: 60),
+              SizedBox(width: 85), // Added space between the two Text widgets
               Text(
-  card.Seats_Num.toString(),
-                style: TextStyle(color: Color(0xFF59597C), fontSize: 14),
+                card.Status,
+                style: TextStyle(
+                  color: statusColor, // Use statusColor here
+                ),
               ),
             ],
           ),
