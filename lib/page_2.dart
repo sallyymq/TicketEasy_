@@ -29,7 +29,7 @@ class Page2 extends StatelessWidget {
             ),
             const SizedBox(height: 27),
             const Text(
-              "Buy your tickets Easily!\nJust a few taps ",
+              "Buy your tickets Easily!\nJust a few taps with Qliq ",
               style: TextStyle(color: Colors.grey, fontSize: 18),
               textAlign: TextAlign.center,
             )
