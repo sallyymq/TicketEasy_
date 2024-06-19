@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketeasy/components/appBar.dart';
 import 'package:ticketeasy/components/m_BNB.dart';
@@ -108,12 +107,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       onTap: () {},
                     ),
-                   
                     SizedBox(height: 15),
                   ],
                 ),
               ),
-              SizedBox(height:40),
+              SizedBox(height: 40),
               MaterialButton(
                 onPressed: () async {
                   await FirebaseAuth.instance.signOut();
@@ -186,4 +184,3 @@ class LinePainter extends CustomPainter {
     return false;
   }
 }
-

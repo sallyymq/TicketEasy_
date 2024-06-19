@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ticketeasy/components/appBar.dart';
 import 'package:ticketeasy/components/b_BNB.dart';
@@ -82,7 +80,7 @@ class _BProfilePageState extends State<BProfilePage> {
                         children: [
                           Text(
                             "\nYour Name",
-                            style:TextStyle(
+                            style: TextStyle(
                               color: Color(0xFF59597C),
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -100,8 +98,6 @@ class _BProfilePageState extends State<BProfilePage> {
                       onTap: () {},
                     ),
                     SizedBox(height: 24),
-                    
-                    
                   ],
                 ),
               ),
@@ -188,4 +184,3 @@ class LinePainter extends CustomPainter {
     return false;
   }
 }
-

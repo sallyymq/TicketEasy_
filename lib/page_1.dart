@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Page1 extends StatelessWidget {
   const Page1({Key? key}) : super(key: key);
@@ -20,7 +19,7 @@ class Page1 extends StatelessWidget {
               'images/tour1.png',
               fit: BoxFit.contain,
             ),
-           const Text("Welcome to TicketEasy",
+            const Text("Welcome to TicketEasy",
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500)),
             const SizedBox(height: 27),
             const Text(

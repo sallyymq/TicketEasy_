@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:ticketeasy/bottom_navigation_bar_widget.dart';
 import 'package:ticketeasy/ticket_card_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 
 class TicketPage extends StatelessWidget {
   @override
@@ -34,7 +33,9 @@ class TicketPage extends StatelessWidget {
         ],
       ),
       body: TicketList(userId: user!.uid),
-      bottomNavigationBar: BottomNavigationBarWidget(tickets: [],),
+      bottomNavigationBar: BottomNavigationBarWidget(
+        tickets: [],
+      ),
     );
   }
 }
@@ -84,7 +85,8 @@ class TicketList extends StatelessWidget {
                   return SizedBox.shrink();
                 }
 
-                final ticketData = snapshot.data!.data() as Map<String, dynamic>;
+                final ticketData =
+                    snapshot.data!.data() as Map<String, dynamic>;
                 final bool scanned = ticketData['scanned'] ?? false;
 
                 if (scanned) {

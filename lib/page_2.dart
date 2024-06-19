@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ticketeasy/main.dart';
 
 class Page2 extends StatelessWidget {
   const Page2({Key? key}) : super(key: key);
@@ -29,7 +27,7 @@ class Page2 extends StatelessWidget {
             ),
             const SizedBox(height: 27),
             const Text(
-              "Buy your tickets Easily!\nJust a few taps with Qliq ",
+              "Buy your tickets Easily!\nJust a few taps ",
               style: TextStyle(color: Colors.grey, fontSize: 18),
               textAlign: TextAlign.center,
             )

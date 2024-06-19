@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticketeasy/homepage.dart';
-import 'package:ticketeasy/payment.dart';
 import 'package:ticketeasy/profile.dart';
 import 'package:ticketeasy/purchase.dart';
-import 'package:ticketeasy/ticket_page.dart';
 
 class BottomNavigationBarWidget extends StatefulWidget {
   final List<Map<String, String>> tickets;

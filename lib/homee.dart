@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ticketeasy/login.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'main.dart';
 import 'package:ticketeasy/page_1.dart';
 import 'package:ticketeasy/page_2.dart';
 import 'package:ticketeasy/page_3.dart';

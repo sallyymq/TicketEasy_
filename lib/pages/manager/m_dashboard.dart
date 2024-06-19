@@ -2,10 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ticketeasy/components/appBar.dart';
 import 'package:ticketeasy/components/m_BNB.dart';
-import 'package:ticketeasy/models/tickets.dart';
-import 'package:ticketeasy/components/ticket_chart.dart'; 
-import 'package:ticketeasy/components/ticket_chart2.dart'; 
-import 'package:ticketeasy/components/ticket_chart3.dart'; 
+import 'package:ticketeasy/components/ticket_chart.dart';
+import 'package:ticketeasy/components/ticket_chart2.dart';
+import 'package:ticketeasy/components/ticket_chart3.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -65,7 +64,8 @@ class _DashboardState extends State<Dashboard> {
                   }
 
                   int totalTicketsSold = snapshot.data!.docs.length;
-                  double totalPrice = totalTicketsSold * 1.15; // Adjust if you have different logic for calculating total price
+                  double totalPrice = totalTicketsSold *
+                      1.15; // Adjust if you have different logic for calculating total price
 
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

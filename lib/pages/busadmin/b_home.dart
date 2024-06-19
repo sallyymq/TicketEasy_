@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ticketeasy/components/appBar.dart';
 import 'package:ticketeasy/components/b_BNB.dart';
-import 'package:ticketeasy/theme/colors.dart';
 import 'package:ticketeasy/pages/busadmin/qr_scanner_page.dart'; // Import the QRScannerPage
 
 class ScanPage extends StatelessWidget {

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ticketeasy/main.dart';
 
 class Page3 extends StatelessWidget {
   const Page3({Key? key}) : super(key: key);
