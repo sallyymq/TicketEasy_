@@ -16,7 +16,7 @@ class Payment extends StatefulWidget {
 class _PaymentState extends State<Payment> {
   final TextEditingController _aliasController = TextEditingController();
   int _ticketCount = 1;
-  final double ticketPrice = 1.15; // Price per ticket
+  final double ticketPrice = 1.62; // Price per ticket
 
   @override
   void didChangeDependencies() {
@@ -145,7 +145,7 @@ class _PaymentState extends State<Payment> {
                       readOnly: true,
                       decoration: InputDecoration(
                         border: InputBorder.none,
-                        hintText: '$ticketPrice JD for each ticket',
+                        hintText: '1.15 JD for each ticket',
                         hintStyle: TextStyle(
                           fontFamily: "Inter",
                           fontSize: 15,
