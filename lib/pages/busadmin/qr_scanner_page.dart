@@ -141,7 +141,7 @@ class _QRScannerState extends State<QRScanner> {
   Future<void> _incrementScannedCount() async {
     DocumentReference counterDoc = FirebaseFirestore.instance
         .collection('ScanCounter')
-        .doc('rOD8V42EaQw4ewqLrLB6'); // Replace with your actual document ID
+        .doc('rOD8V42EaQw4ewqLrLB6'); 
 
     try {
       await counterDoc.update({'count': FieldValue.increment(1)});
