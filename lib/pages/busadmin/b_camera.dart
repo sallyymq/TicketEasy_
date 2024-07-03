@@ -9,9 +9,7 @@ class CameraPage extends StatefulWidget {
 }
 
 class _ManagerLoginState extends State<CameraPage> {
-  // sign user in method should be static or moved out of StatefulWidget
   static void signUserIn() {
-    // Method implementation here
   }
 @override
   Widget build(BuildContext context) {
